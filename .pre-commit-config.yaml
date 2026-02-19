@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.21.0
+    hooks:
+      - id: markdownlint-cli2
+        args: [--config, .markdownlint.yaml]
+
+  - repo: https://github.com/djlint/djLint
+    rev: v1.36.4
+    hooks:
+      - id: djlint-golang
+        types_or: [html]
+        args: [--ignore, "H006,H016,H023,H030,H031"]
+
+  - repo: local
+    hooks:
+      - id: hugo-build
+        name: hugo build
+        entry: bash -c 'if command -v hugo &>/dev/null; then hugo --gc --minify; else echo "hugo not found, skipping build check"; fi'
+        language: system
+        pass_filenames: false
+        always_run: true
