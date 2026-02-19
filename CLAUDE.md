@@ -37,9 +37,8 @@ static/CNAME                      # Custom domain: prtk.in
 ## Local Dev
 
 ```bash
-export PATH="/raid/praateekm/tools_cache/hugo:$PATH"
-hugo server          # dev server at localhost:1313
-hugo --gc --minify   # production build to public/
+hugo server --bind 0.0.0.0  # dev server at localhost:1313
+hugo --gc --minify          # production build to public/
 ```
 
 ## Adding a Blog Post
