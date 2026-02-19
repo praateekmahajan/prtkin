@@ -1,0 +1,20 @@
+baseURL = 'https://prtk.in/'
+languageCode = 'en-us'
+title = 'Praateek Mahajan'
+
+[params]
+  tagline = 'Software / ML / AI Engineer. Building things.'
+  bio = 'I like diving into code. Doing large scale data / AI things at NVIDIA, previously did that at Block / Iterable.'
+  blogBlurb = 'Another attempt at taking notes and writing blogs — surely this time it will stick.'
+  avatarURL = 'https://github.com/praateekmahajan.png'
+  github = 'https://github.com/praateekmahajan'
+  linkedin = 'https://linkedin.com/in/praateek/'
+  twitter = 'https://x.com/praateekmahajan'
+
+[build]
+  [build.buildStats]
+    disableClasses = true
+    disableIDs = true
+    disableTags = true
+
+disableKinds = ['taxonomy', 'term']
