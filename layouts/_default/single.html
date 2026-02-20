@@ -7,5 +7,7 @@
   <div class="prose">
     {{ .Content }}
   </div>
+  <hr>
+  <p class="post-footer-note"><em>These are personal notes. If something's wrong, {{ $url := printf "https://github.com/praateekmahajan/prtkin/issues/new?%s&%s" (querify "title" (printf "Issue with: %s" .Title)) (querify "body" (printf "Found an issue in [%s](%s%s)\n\n**Describe the issue:**\n" .Title .Site.BaseURL .RelPermalink)) }}<a href="{{ $url | safeURL }}">let me know</a>.</em></p>
 </article>
 {{ end }}

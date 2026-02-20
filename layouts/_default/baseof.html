@@ -18,14 +18,43 @@
     </main>
     {{- partial "footer.html" . -}}
   </div>
-  <script>
-    document.querySelector('.theme-toggle').addEventListener('click', function() {
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+    function getMermaidTheme() {
+      return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default';
+    }
+
+    // Store original mermaid source before first render
+    var mermaidSources = [];
+    document.querySelectorAll('pre > code.language-mermaid').forEach(function(el) {
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = el.textContent;
+      mermaidSources.push(el.textContent);
+      el.parentElement.replaceWith(div);
+    });
+
+    mermaid.initialize({ startOnLoad: true, theme: getMermaidTheme() });
+
+    document.querySelector('.theme-toggle').addEventListener('click', async function() {
       var html = document.documentElement;
       var current = html.getAttribute('data-theme');
       var next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       this.textContent = next === 'dark' ? '☀️' : '🌙';
+
+      // Re-render mermaid diagrams with new theme
+      var diagrams = document.querySelectorAll('.mermaid');
+      if (diagrams.length > 0) {
+        mermaid.initialize({ startOnLoad: false, theme: next === 'dark' ? 'dark' : 'default' });
+        diagrams.forEach(function(el, i) {
+          el.removeAttribute('data-processed');
+          el.innerHTML = mermaidSources[i];
+        });
+        await mermaid.run({ nodes: diagrams });
+      }
     });
   </script>
 </body>
